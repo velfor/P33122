@@ -12,22 +12,14 @@ int main()
 	
 	//ракетки
 	RectangleShape leftBat, rightBat;
-	{
-		/*leftBat.setSize(batSize);
-		leftBat.setFillColor(leftBatColor);
-		leftBat.setPosition(batOffset, (WINDOW_HEIGHT - batHeight) / 2);
-		*/
-		initBat(leftBat, leftBatColor, leftBatStartPos);
-
-		rightBat.setSize(batSize);
-		rightBat.setFillColor(rightBatColor);
-		rightBat.setPosition(WINDOW_WIDTH - batOffset, (WINDOW_HEIGHT - batHeight) / 2);
-	}
+	initBat(leftBat, leftBatColor, leftBatStartPos);
+	initBat(rightBat, rightBatColor, rightBatStartPos);
 	float leftBatSpeedY = 0.f;
 	float rightBatSpeedY = 0.f;
 
 	//шарик
-	CircleShape ball(ballRadius);
+	CircleShape ball;
+	ball.setRadius(ballRadius);
 	ball.setFillColor(ballColor);
 	ball.setPosition((WINDOW_WIDTH - 2*ballRadius) / 2, 
 		(WINDOW_HEIGHT - 2 * ballRadius) / 2);
