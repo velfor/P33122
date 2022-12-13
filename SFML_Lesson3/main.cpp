@@ -1,4 +1,5 @@
 #include "settings.h"
+#include "functions.h"
 using namespace sf;
 
 int main()
@@ -11,12 +12,17 @@ int main()
 	
 	//ракетки
 	RectangleShape leftBat, rightBat;
-	leftBat.setSize(batSize);
-	rightBat.setSize(batSize);
-	leftBat.setFillColor(leftBatColor);
-	rightBat.setFillColor(rightBatColor);
-	leftBat.setPosition(batOffset, (WINDOW_HEIGHT - batHeight) / 2);
-	rightBat.setPosition(WINDOW_WIDTH - batOffset, (WINDOW_HEIGHT - batHeight) / 2);
+	{
+		/*leftBat.setSize(batSize);
+		leftBat.setFillColor(leftBatColor);
+		leftBat.setPosition(batOffset, (WINDOW_HEIGHT - batHeight) / 2);
+		*/
+		initBat(leftBat, leftBatColor, leftBatStartPos);
+
+		rightBat.setSize(batSize);
+		rightBat.setFillColor(rightBatColor);
+		rightBat.setPosition(WINDOW_WIDTH - batOffset, (WINDOW_HEIGHT - batHeight) / 2);
+	}
 	float leftBatSpeedY = 0.f;
 	float rightBatSpeedY = 0.f;
 

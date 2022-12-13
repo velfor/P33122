@@ -13,6 +13,7 @@ const sf::Vector2f batSize(20.f, 80.f);
 const sf::Color leftBatColor{ 158,20,37 };
 const sf::Color rightBatColor{ 20,158,49 };
 const float batSpeed = 5.f;
+const sf::Vector2f leftBatStartPos{ batOffset, (WINDOW_HEIGHT - batHeight) / 2 };
 
 const float ballRadius = 25.f;
 const sf::Color ballColor{ sf::Color::Yellow };
