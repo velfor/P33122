@@ -17,5 +17,7 @@ struct Game
 	Bat leftBat, rightBat;
 	Ball ball;
 	sf::Font font;
+	int leftPlayerScore = 0;
+	int rightPlayerScore = 0;
 	sf::Text leftPlayerScoreText, rightPlayerScoreText;
 };

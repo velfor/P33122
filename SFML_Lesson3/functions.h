@@ -3,9 +3,10 @@
 #include "settings.h"
 #include "game.h"
 
-void initBat(Bat& bat, const sf::Color batColor, const sf::Vector2f batPosition) 
+
+void initBat(Bat& bat, const sf::Color& batColor, const sf::Vector2f& batPosition) 
 {
-	bat.shape.setSize(batSize);
+	bat.shape.setSize(BAT_SIZE);
 	bat.shape.setFillColor(batColor);
 	bat.shape.setPosition(batPosition);
 	bat.speedY = 0.f;
@@ -30,7 +31,16 @@ void initText(sf::Text& scoreText, int score, sf::Font& font,
 	scoreText.setCharacterSize(charSize);
 	scoreText.setPosition(textStartPos);
 }
-
+void initGame(Game& game) {
+	game.window.create(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), WINDOW_TITLE);
+	game.window.setFramerateLimit(FPS);
+	initBat(game.leftBat, LEFT_BAT_COLOR, LEFT_BAT_START_POS);
+	initBat(game.rightBat, RIGHT_BAT_COLOR, RIGHT_BAT_START_POS);
+	initBall(game.ball);
+	game.font.loadFromFile("ds-digib.ttf");
+	initText(game.leftPlayerScoreText, game.leftPlayerScore, game.font, CHAR_SIZE, LEFT_TEXT_START_POS);
+	initText(game.rightPlayerScoreText, game.rightPlayerScore, game.font, CHAR_SIZE, RIGHT_TEXT_START_POS);
+}
 void ballReboundX(float& ballSpeed, int& playerScore, 
 	sf::Text& scoreText)
 {

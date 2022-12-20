@@ -1,4 +1,4 @@
-#include "settings.h"
+п»ї#include "settings.h"
 #include "functions.h"
 #include "game.h"
 using namespace sf;
@@ -6,81 +6,74 @@ int main()
 {
 	srand(time(nullptr));
 	Game game;
-	game.window.create(VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), WINDOW_TITLE);
-	game.window.setFramerateLimit(FPS);
-	initBat(game.leftBat, leftBatColor, leftBatStartPos);
-	initBat(game.rightBat, rightBatColor, rightBatStartPos);
-	initBall(game.ball);
-
-	int leftPlayerScore = 0;
-	int rightPlayerScore = 0;
+	initGame(game);
 	
-	game.font.loadFromFile("ds-digib.ttf");
-	initText(game.leftPlayerScoreText, leftPlayerScore, game.font, charSize, leftTextStartPos);
-	initText(game.rightPlayerScoreText, rightPlayerScore, game.font, charSize, rightTextStartPos);
-	
-	// Главный цикл приложения. Выполняется, пока открыто окно
+	// Р“Р»Р°РІРЅС‹Р№ С†РёРєР» РїСЂРёР»РѕР¶РµРЅРёСЏ. Р’С‹РїРѕР»РЅСЏРµС‚СЃСЏ, РїРѕРєР° РѕС‚РєСЂС‹С‚Рѕ РѕРєРЅРѕ
 	while (game.window.isOpen())
 	{
-		//1 Обрабатываем очередь событий в цикле
+		//1 РћР±СЂР°Р±Р°С‚С‹РІР°РµРј РѕС‡РµСЂРµРґСЊ СЃРѕР±С‹С‚РёР№ РІ С†РёРєР»Рµ
 		Event event;
 		while (game.window.pollEvent(event))
 		{
-			// Пользователь нажал на «крестик» и хочет закрыть окно?
+			// РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РЅР°Р¶Р°Р» РЅР° В«РєСЂРµСЃС‚РёРєВ» Рё С…РѕС‡РµС‚ Р·Р°РєСЂС‹С‚СЊ РѕРєРЅРѕ?
 			if (event.type == Event::Closed)
-				// тогда закрываем его
+				// С‚РѕРіРґР° Р·Р°РєСЂС‹РІР°РµРј РµРіРѕ
 				game.window.close();
 		}
 
-		//2 Обновление объектов
-		//шарик
-		//движение шарика
+		//2 РћР±РЅРѕРІР»РµРЅРёРµ РѕР±СЉРµРєС‚РѕРІ
 		game.ball.shape.move(game.ball.speedX, game.ball.speedY);
-		Vector2f midLeft{ game.ball.shape.getPosition().x, game.ball.shape.getPosition().y + BALL_RADIUS };
-		Vector2f midTop{ game.ball.shape.getPosition().x + BALL_RADIUS, game.ball.shape.getPosition().y };
-		Vector2f midRight{ game.ball.shape.getPosition().x + 2 * BALL_RADIUS, game.ball.shape.getPosition().y + BALL_RADIUS };
-		Vector2f midBottom{ game.ball.shape.getPosition().x + BALL_RADIUS, game.ball.shape.getPosition().y + 2 * BALL_RADIUS };
-		//попал-вышел за левую 
-		if (game.ball.shape.getPosition().x <= 0) {
-			ballReboundX(game.ball.speedX, rightPlayerScore,
+		Vector2f midLeft{ 
+			game.ball.shape.getPosition().x, 
+			game.ball.shape.getPosition().y + BALL_RADIUS 
+		};
+		Vector2f midTop{ 
+			game.ball.shape.getPosition().x + BALL_RADIUS,
+			game.ball.shape.getPosition().y 
+		};
+		Vector2f midRight{ 
+			game.ball.shape.getPosition().x + 2 * BALL_RADIUS,
+			game.ball.shape.getPosition().y + BALL_RADIUS 
+		};
+		Vector2f midBottom{ 
+			game.ball.shape.getPosition().x + BALL_RADIUS,
+			game.ball.shape.getPosition().y + 2 * BALL_RADIUS 
+		};
+		 
+		if (game.ball.shape.getPosition().x <= 0) 
+		{
+			ballReboundX(game.ball.speedX, game.rightPlayerScore,
 				game.rightPlayerScoreText);
 			initBall(game.ball);
-			/*game.window.display();
-			do {} while (!(Keyboard::isKeyPressed(Keyboard::Space)));*/
 		}
-
-		//или правую границу
 		if (game.ball.shape.getPosition().x >=
-			(WINDOW_WIDTH - 2 * BALL_RADIUS))
+			WINDOW_WIDTH - 2 * BALL_RADIUS)
 		{
-			ballReboundX(game.ball.speedX, leftPlayerScore,
+			ballReboundX(game.ball.speedX, game.leftPlayerScore,
 				game.leftPlayerScoreText);
 			initBall(game.ball);
-			/*game.window.display();
-			do {} while (!(Keyboard::isKeyPressed(Keyboard::Space)));*/
 		}
-		//верхняя или нижняя границы
+	
 		if (game.ball.shape.getPosition().y <= 0 ||
 			game.ball.shape.getPosition().y >=
 			(WINDOW_HEIGHT - 2 * BALL_RADIUS)
 			)
 			game.ball.speedY = -game.ball.speedY;
-		//отбивание мяча от ракеток
-		// левой ракетки
+		//РѕС‚Р±РёРІР°РЅРёРµ РјСЏС‡Р° РѕС‚ СЂР°РєРµС‚РѕРє
+		// Р»РµРІРѕР№ СЂР°РєРµС‚РєРё
 		if (pointInRect(game.leftBat, midLeft))
 			game.ball.speedX = -game.ball.speedX;
 		if (pointInRect(game.leftBat, midTop) || pointInRect(game.leftBat, midBottom))
 			game.ball.speedY = -game.ball.speedY;
-		//правая
+		//РїСЂР°РІРѕР№ СЂР°РєРµС‚РєРё
 		if (pointInRect(game.rightBat, midRight))
 			game.ball.speedX = -game.ball.speedX;
 		if (pointInRect(game.rightBat, midTop) || pointInRect(game.rightBat, midBottom))
 			game.ball.speedY = -game.ball.speedY;
-
+		//СѓРїСЂР°РІР»РµРЅРёРµ СЂР°РєРµС‚РєР°РјРё
 		controlBat(game.leftBat, Keyboard::W, Keyboard::S);
 		controlBat(game.rightBat, Keyboard::Up, Keyboard::Down);
-		
-		
+		//РѕС‚СЂРёСЃРѕРІРєР°
 		drawAll(game);
 	}
 	return 0;
