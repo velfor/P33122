@@ -2,13 +2,13 @@
 #include "SFML/Graphics.hpp"
 
 struct Bat {
-	sf::RectangleShape batShape;
-	float batSpeedY;
+	sf::RectangleShape shape;
+	float speedY;
 };
 
 struct Ball {
-	sf::CircleShape ball;
-	float ballSpeedX, ballSpeedY;
+	sf::CircleShape shape;
+	float speedX, speedY;
 };
 
 struct Game
