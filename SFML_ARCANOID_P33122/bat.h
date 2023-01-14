@@ -1,5 +1,6 @@
 #pragma once
 #include "settings.h"
+#include "SFML/Graphics.hpp"
 
 struct Bat {
 	sf::RectangleShape shape;
@@ -35,6 +36,6 @@ void batUpdate(Bat& bat) {
 	batReboundEdges(bat);
 }
 
-void batDraw(sf::RenderWindow& window, Bat& bat) {
+void batDraw(sf::RenderWindow& window, const Bat& bat) {
 	window.draw(bat.shape);
 }

@@ -14,3 +14,10 @@ const sf::Vector2f BAT_START_POS{
 	WINDOW_HEIGHT - BAT_OFFSET - BAT_HEIGHT
 };
 const float BAT_SPEED = 5.f;
+
+const float BALL_RADIUS = 10.f;
+const sf::Color BALL_COLOR{ sf::Color::Yellow };
+const sf::Vector2f BALL_START_POS{
+	(WINDOW_WIDTH - 2 * BALL_RADIUS) / 2,
+	(WINDOW_HEIGHT - 2 * BALL_RADIUS) / 2
+};
