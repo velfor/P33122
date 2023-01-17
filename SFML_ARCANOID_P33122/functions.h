@@ -2,6 +2,14 @@
 #include "SFML/Graphics.hpp"
 #include "bat.h"
 #include "ball.h"
+#include "textobj.h"
+
+bool pointInRect(sf::RectangleShape bat, sf::Vector2f point) {
+	float batX = bat.getPosition().x;
+	float batY = bat.getPosition().y;
+	return (point.x >= batX && point.x <= batX + BAT_WIDTH)
+		&& (point.y >= batY && point.y <= batY + BAT_HEIGHT);
+}
 
 void checkEvents(sf::RenderWindow& window) {
 	sf::Event event;
@@ -11,9 +19,10 @@ void checkEvents(sf::RenderWindow& window) {
 	}
 }
 
-void updateGame(Bat& bat, Ball& ball) {
+void updateGame(Bat& bat, Ball& ball, TextObj& scoreText, int score) {
 	batUpdate(bat);
 	ballUpdate(ball);
+	textUpdate(scoreText, score);
 }
 
 void checkCollisions(Bat& bat, Ball& ball) {
@@ -34,13 +43,17 @@ void checkCollisions(Bat& bat, Ball& ball) {
 		ball.shape.getPosition().x + BALL_RADIUS,
 		ball.shape.getPosition().y + 2 * BALL_RADIUS
 	};
+	if (pointInRect(bat.shape, midBottom)) {
+		ball.speedY = -ball.speedY;
+	}
 }
 
 void drawGame(sf::RenderWindow& window, const Bat& bat, 
-	const Ball& ball) {
+	const Ball& ball, const TextObj& scoreText) {
 	window.clear();
 	batDraw(window, bat);
-	ballDraw(window, ball);
+	ballDraw(window, ball);	
+	textDraw(window, scoreText);
 	window.display();
 }
 

@@ -21,3 +21,7 @@ const sf::Vector2f BALL_START_POS{
 	(WINDOW_WIDTH - 2 * BALL_RADIUS) / 2,
 	(WINDOW_HEIGHT - 2 * BALL_RADIUS) / 2
 };
+
+const int CHAR_SIZE = 48;
+const float TEXT_OFFSET = 50.f;
+const sf::Vector2f TEXT_START_POS{ WINDOW_WIDTH - TEXT_OFFSET, 0.f };

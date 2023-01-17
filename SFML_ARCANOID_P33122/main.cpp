@@ -2,6 +2,7 @@
 #include <ctime>
 #include "functions.h"
 #include "bat.h"
+#include "textobj.h"
 
 using namespace sf;
 int main()
@@ -13,21 +14,24 @@ int main()
 		WINDOW_TITLE
 	);
 
+	int score = 0;
+
 	Bat bat;
 	batInit(bat);
 	Ball ball;
 	ballInit(ball);
+	TextObj scoreText;
+	textInit(scoreText, score);
 
 	while (window.isOpen()){
 		checkEvents(window);
-		updateGame(bat, ball);
-		//if (! updateGame(bat, ball)) break;
-		//игра закончилась? - прервать цикл
+		updateGame(bat, ball, scoreText, score);
+		
 		if (ball.shape.getPosition().y >=
 			WINDOW_HEIGHT - 2 * BALL_RADIUS)
 			break;
 		checkCollisions(bat, ball);
-		drawGame(window, bat, ball);
+		drawGame(window, bat, ball, scoreText);
 	}
 	return 0;
 }
